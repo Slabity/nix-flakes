@@ -21,7 +21,7 @@ with lib;
       arduino
       audacity
 
-      obs-studio
+      v4l-utils
 
       spotify
       mpv

@@ -63,6 +63,10 @@ let
   };
 in
 {
+  imports = [
+    ./applications.nix
+  ];
+
   options = {
     workstation.enable = mkEnableOption "Workstation support";
   };

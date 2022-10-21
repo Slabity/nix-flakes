@@ -31,6 +31,6 @@ with lib;
       forwardAgent = true;
     };
 
-    manual.manpages.enable = false;
+    #manual.manpages.enable = false;
   };
 }
