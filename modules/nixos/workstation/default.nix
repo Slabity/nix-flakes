@@ -1,6 +1,11 @@
 { config, lib, pkgs, flake, ... }:
 with lib;
 {
+  imports = [
+    ./gaming.nix
+    ./applications.nix
+  ];
+
   options.workstation = {
     enable = mkEnableOption "Workstation support";
     laptop.enable = mkEnableOption "Laptop support";
@@ -49,16 +54,12 @@ with lib;
       extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
     };
 
-    programs.steam.enable = true;
-
     hardware = {
       bluetooth = {
         enable = true;
         hsphfpd.enable = true;
         package = pkgs.bluez;
       };
-
-      steam-hardware.enable = true;
       keyboard.uhk.enable = true;
     };
 
@@ -113,7 +114,6 @@ with lib;
       wlr-randr
       wlrctl
 
-      firefox-wayland
       pavucontrol
       xdg-utils
     ];
