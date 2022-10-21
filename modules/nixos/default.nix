@@ -11,7 +11,6 @@ with lib;
       nix-index
       nix-prefetch-git
 
-      git
       man-pages
 
       pciutils usbutils atop
@@ -23,6 +22,14 @@ with lib;
 
     programs.zsh.enable = true;
     users.defaultUserShell = pkgs.zsh;
+
+    programs.git = {
+      enable = true;
+      config = {
+        init = { defaultBranch = "main"; };
+      };
+      lfs.enable = true;
+    };
 
     programs.neovim = {
       enable = true;
