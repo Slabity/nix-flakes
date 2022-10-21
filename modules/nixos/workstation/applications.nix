@@ -9,16 +9,22 @@ with lib;
 
       super-slicer
 
+      feh
       krita
       gimp
+      blender
 
       discord
       element-desktop
 
+      transmission
+      arduino
+      audacity
+
       obs-studio
 
       spotify
-      mpv-with-scripts
+      mpv
     ];
 
     # For Virtual Camera support in OBS

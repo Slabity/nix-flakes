@@ -91,11 +91,13 @@ with lib;
       swayidle
 
       xwayland # for legacy apps
+      xorg.xrandr
 
       waybar # status bar
       mako # notification daemon
       kanshi # autorandr
       wdisplays
+      waypipe
 
       # Screenshots
       grim

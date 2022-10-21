@@ -10,6 +10,16 @@ with lib;
     hardware.steam-hardware.enable = true;
     hardware.inputDevices.ps3Controller = true;
 
+    programs.gamemode = {
+      enable = true;
+      settings = {
+        custom = {
+          start = "${pkgs.libnotify}/bin/notify-send 'GameMode started'";
+          end = "${pkgs.libnotify}/bin/notify-send 'GameMode ended'";
+        };
+      };
+    };
+
     environment.systemPackages = with pkgs; [
       steam-run
     ];

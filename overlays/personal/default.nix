@@ -49,6 +49,7 @@ final: prev:
     ];
   });
 
+  /*
   freecad = prev.freecad.overrideAttrs(old: {
     version = "0.20";
 
@@ -56,9 +57,10 @@ final: prev:
       owner = "FreeCAD";
       repo = "FreeCAD";
       rev = "master";
-      hash = "sha256-MjQLDn5174igveyzpLmGV7jg/3xpLBGVoeRB0ZU74XI=";
+      hash = "sha256-nSyWrvXOLjcvbcbil0ZZBb9mcmmWrkdeicv68pFAErM=";
     };
-  });
+    });
+    */
 
   bcachefs-tools = prev.bcachefs-tools.overrideAttrs(old: {
     buildInputs = old.buildInputs ++ [

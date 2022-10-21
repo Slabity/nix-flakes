@@ -13,7 +13,7 @@ with lib;
 
       man-pages
 
-      pciutils usbutils atop
+      pciutils usbutils
       pstree
       file bc psmisc
 
@@ -30,6 +30,8 @@ with lib;
       };
       lfs.enable = true;
     };
+
+    programs.atop.enable = true;
 
     programs.neovim = {
       enable = true;
