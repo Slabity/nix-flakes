@@ -10,5 +10,28 @@ with lib;
         obs-gstreamer
       ];
     };
+
+    home.packages = with pkgs; [
+      firefox-wayland
+
+      libreoffice
+
+      super-slicer
+
+      feh
+      krita
+      gimp
+      blender
+
+      discord
+      element-desktop
+
+      transmission
+      arduino
+      audacity
+
+      spotify
+      mpv
+    ];
   };
 }

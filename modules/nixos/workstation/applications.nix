@@ -3,28 +3,7 @@ with lib;
 {
   config = mkIf config.workstation.enable {
     environment.systemPackages = with pkgs; [
-      firefox-wayland
-
-      libreoffice
-
-      super-slicer
-
-      feh
-      krita
-      gimp
-      blender
-
-      discord
-      element-desktop
-
-      transmission
-      arduino
-      audacity
-
       v4l-utils
-
-      spotify
-      mpv
     ];
 
     # For Virtual Camera support in OBS

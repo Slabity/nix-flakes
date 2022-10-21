@@ -30,7 +30,5 @@ with lib;
       controlMaster = "yes";
       forwardAgent = true;
     };
-
-    #manual.manpages.enable = false;
   };
 }
