@@ -41,4 +41,5 @@ with lib;
 
   networking.hostName = "lucario";
   workstation.enable = true;
+  workstation.gaming.enable = true;
 }

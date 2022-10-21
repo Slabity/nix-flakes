@@ -41,4 +41,5 @@ with lib;
 
   networking.hostName = "mew";
   workstation.enable = true;
+  workstation.gaming.enable = true;
 }
