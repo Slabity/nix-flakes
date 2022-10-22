@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, flake, ... }:
 let
   rustChannel = pkgs.preferredRustChannel;
 in

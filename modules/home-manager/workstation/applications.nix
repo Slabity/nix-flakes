@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, flake, ... }:
 with lib;
 {
   config = mkIf config.workstation.enable {

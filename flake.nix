@@ -17,24 +17,27 @@
   };
 
   outputs = { self, ... }@inputs:
+  let
+    flake = self // inputs;
+  in
   {
     nixosModules = { default = ./modules/nixos; };
     homeManagerModules = { default = ./modules/home-manager; };
 
-    nixosConfigurations = with self; with inputs; {
+    nixosConfigurations = with flake; {
       lapras = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        specialArgs = { flake = self // inputs; };
+        specialArgs = { inherit flake; };
         modules = [ ./systems/lapras ];
       };
       lucario = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        specialArgs = { flake = self // inputs; };
+        specialArgs = { inherit flake; };
         modules = [ ./systems/lucario ];
       };
       mew = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        specialArgs = { flake = self // inputs; };
+        specialArgs = { inherit flake; };
         modules = [ ./systems/mew ];
       };
     };
