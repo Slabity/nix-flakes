@@ -126,15 +126,17 @@ in
         floating = {
           modifier = "Mod4";
           titlebar = false;
+          criteria = [
+            { app_id = "pavucontrol"; }
+          ];
         };
         gaps = {
           inner = 2;
         };
         keybindings = let modifier = "Mod4"; in {
-          "${modifier}+Return" = "exec alacritty";
-          "${modifier}+Shift+Return" = "exec i3-sensible-terminal";
+          "${modifier}+Return" = "exec ${pkgs.alacritty}/bin/alacritty";
           "${modifier}+Shift+q" = "kill";
-          "${modifier}+d" = "exec  --no-startup-id rofi -show run";
+          "${modifier}+d" = "exec --no-startup-id ${pkgs.wofi}/bin/wofi --show run";
           "${modifier}+k" = "focus up";
           "${modifier}+j" = "focus down";
           "${modifier}+h" = "focus left";
@@ -265,6 +267,7 @@ in
 
           "pulseaudio" = {
             format = "Vol: {volume}%";
+            on-click = "${pkgs.pavucontrol}/bin/pavucontrol";
           };
 
           "memory" = {
@@ -373,16 +376,6 @@ in
         #network {
           color: ${colors.bright.cyan};
         }
-
-        /*
-        #clock,
-        #pulseaudio,
-        #memory,
-        #cpu,
-        #battery,
-        #disk {
-          padding: 0 5px;
-        }*/
       '';
     };
 
@@ -478,67 +471,14 @@ in
       };
     };
 
-    services.dunst = {
+    programs.mako = {
       enable = true;
-      settings = {
-        global = {
-          font = "TerminessTTF Nerd Font Mono 11";
-          allow_markup = true;
-
-          format = "<b>%s</b>\n%b";
-
-          sort = true;
-          indicate_hidden = true;
-          bounce_freq = 0;
-          show_age_threshold = 60;
-          word_wrap = true;
-          ignore_newline = false;
-
-          geometry = "600x5-20+45";
-          shrink = false;
-
-          transparency = 0;
-          idle_threshold = 0;
-          monitor = 0;
-          follow = "mouse";
-          sticky_history = true;
-          history_length = 20;
-          show_indicators = true;
-
-          line_height = 0;
-          separator_height = 2;
-          padding = 9;
-          horizontal_padding = 9;
-          separator_color = "frame";
-
-          startup_notification = false;
-        };
-        frame = {
-          width = 3;
-          color = "#ebdbb2";
-        };
-        shortcuts = {
-          close = "ctrl+space";
-          close_all = "ctrl+shift+space";
-          history = "ctrl+grave";
-          context = "ctrl+shift+period";
-        };
-        urgency_low = {
-          background = "#282828";
-          foreground = "#ebdbb2";
-          timeout = 5;
-        };
-        urgency_normal = {
-          background = "#282828";
-          foreground = "#ebdbb2";
-          timeout = 5;
-        };
-        urgency_critical = {
-          background = "#cc241d";
-          foreground = "#ebdbb2";
-          timeout = 0;
-        };
-      };
+      anchor = "top-right";
+      font = "Terminus 12";
+      backgroundColor = colors.primary.background;
+      borderColor = colors.normal.blue;
+      borderSize = 2;
+      width = 500;
     };
 
     xresources.extraConfig = ''
