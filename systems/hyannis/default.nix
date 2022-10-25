@@ -32,8 +32,8 @@ with lib;
       ];
       home.stateVersion = "22.11";
 
-      fullName = "${flake.secrets.personal.fullName}";
-      email = "${flake.secrets.personal.workEmail}";
+      fullName = "${flake.secrets.work.fullName}";
+      email = "${flake.secrets.work.email}";
     };
   };
 

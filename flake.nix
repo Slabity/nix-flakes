@@ -41,7 +41,7 @@
         modules = [ ./systems/mew ];
       };
 
-      mew = nixpkgs.lib.nixosSystem {
+      hyannis = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = { inherit flake; };
         modules = [ ./systems/hyannis ];

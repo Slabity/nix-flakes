@@ -9,6 +9,13 @@
 
   hardware.enableRedistributableFirmware = true;
 
+  hardware.nvidia.prime.nvidiaBusId = "PCI:1:0:0";
+  hardware.nvidia.prime.intelBusId = "PCI:0:2:0";
+  hardware.nvidia.modesetting.enable = true;
+
+  environment.etc."gbm/nvidia-drm_gbm.so".source = "${config.boot.kernelPackages.nvidiaPackages.stable}/lib/libnvidia-allocator.so";
+  environment.etc."egl/egl_external_platform.d".source = "/run/opengl-driver/share/egl/egl_external_platform.d/";
+
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" ];
@@ -37,7 +44,6 @@
   fileSystems."/var" = {
     device = "/dev/disk/by-uuid/dec6e4b4-62d9-454e-8341-c52459d03e27";
     fsType = "btrfs";
-    options = [ "subvol=var" ];
     options = [ "noatime,compress=zstd:1,ssd,space_cache=v2,subvol=var" ];
   };
 
