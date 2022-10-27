@@ -19,7 +19,11 @@ with lib;
 
     networking.networkmanager ={
       enable = true;
-      plugins = with pkgs; [ networkmanager-openvpn ];
+      plugins = with pkgs; [
+        networkmanager-openvpn
+        networkmanager-openconnect
+        networkmanager-vpnc
+      ];
       unmanaged = [ "interface-name:ve-*" ];
     };
 

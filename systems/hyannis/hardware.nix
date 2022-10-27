@@ -9,12 +9,20 @@
 
   hardware.enableRedistributableFirmware = true;
 
-  hardware.nvidia.prime.nvidiaBusId = "PCI:1:0:0";
-  hardware.nvidia.prime.intelBusId = "PCI:0:2:0";
-  hardware.nvidia.modesetting.enable = true;
+  hardware.nvidia = {
+    modesetting.enable = true;
+    open = true;
+    prime = {
+      intelBusId = "PCI:0:2:0";
+      nvidiaBusId = "PCI:1:0:0";
+      offload.enable = false;
+    };
+  };
 
+  /*
   environment.etc."gbm/nvidia-drm_gbm.so".source = "${config.boot.kernelPackages.nvidiaPackages.stable}/lib/libnvidia-allocator.so";
   environment.etc."egl/egl_external_platform.d".source = "/run/opengl-driver/share/egl/egl_external_platform.d/";
+  */
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
