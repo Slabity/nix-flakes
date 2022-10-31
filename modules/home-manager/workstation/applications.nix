@@ -16,7 +16,7 @@ with lib;
 
       libreoffice
 
-      super-slicer
+      super-slicer-latest
 
       feh
       krita
