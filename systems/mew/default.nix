@@ -38,6 +38,7 @@ with lib;
   };
 
   services.openssh.enable = true;
+  services.openssh.forwardX11 = true;
 
   networking.hostName = "mew";
   workstation.enable = true;
