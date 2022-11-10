@@ -57,8 +57,7 @@ let
       datadir = "${schema}/share/gsettings-schemas/${schema.name}";
     in ''
       export XDG_DATA_DIRS=${datadir}:$XDG_DATA_DIRS
-      gnome_schema=org.gnome.desktop.interface
-      gsettings set $gnome_schema gtk-theme 'Dracula'
+      gsettings set org.gnome.desktop.interface gtk-theme 'Arc-Dark'
     '';
   };
 in
@@ -178,7 +177,7 @@ in
         };
         startup = [
           { command = "${dbus-sway-environment}/bin/dbus-sway-environment"; }
-          { command = "${configure-gtk}/bin/configure-gtk"; }
+          { command = "${configure-gtk}/bin/configure-gtk"; always = true; }
         ];
       };
     };
@@ -299,7 +298,14 @@ in
 
       style = ''
         * {
+          all: inherit;
           min-height: 0;
+          min-width: 0;
+          margin: 0;
+          padding: 0;
+          border: 0;
+          border-radius: 0;
+          font-weight: normal;
           font-size: 12px;
           font-family: Terminus;
         }

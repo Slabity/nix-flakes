@@ -14,8 +14,6 @@ with lib;
     home.packages = with pkgs; [
       firefox-wayland
 
-      libreoffice
-
       super-slicer-latest
 
       feh
