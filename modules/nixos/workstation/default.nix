@@ -61,7 +61,6 @@ with lib;
     hardware = {
       bluetooth = {
         enable = true;
-        hsphfpd.enable = true;
         package = pkgs.bluez;
       };
       keyboard.uhk.enable = true;
