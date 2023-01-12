@@ -50,8 +50,8 @@ with lib;
     "net.ipv6.conf.all.use_tempaddr" = 0;
 
     # On WAN, allow IPv6 autoconfiguration and tempory address use.
-    "net.ipv6.conf.enp2s0.accept_ra" = 2;
-    "net.ipv6.conf.enp2s0.autoconf" = 1;
+    "net.ipv6.conf.wan0.accept_ra" = 2;
+    "net.ipv6.conf.wan0.autoconf" = 1;
   };
 
 
@@ -92,20 +92,20 @@ with lib;
 
 
             # Allow certain ports access to the router
-            iifname "enp2s0" tcp dport { ssh } counter accept
-            iifname "enp2s0" udp dport {
+            iifname "wan0" tcp dport { ssh } counter accept
+            iifname "wan0" udp dport {
               ${builtins.toString flake.secrets.wireguard.lapras.port}
             } counter accept
 
-            # Allow returning traffic from enp2s0 and drop everthing else
-            iifname "enp2s0" ct state { established, related } counter accept
-            iifname "enp2s0" drop
+            # Allow returning traffic from wan0 and drop everthing else
+            iifname "wan0" ct state { established, related } counter accept
+            iifname "wan0" drop
           }
 
           # Enable flow offloading for better throughput
           flowtable f {
             hook ingress priority 0;
-            devices = { enp2s0, enp3s0, enp4s0, enp5s0 };
+            devices = { wan0, lan0, lan1, lan2 };
           }
 
           chain forward {
@@ -120,12 +120,12 @@ with lib;
                     "wg0",
                     "lo",
             } oifname {
-                    "enp2s0",
+                    "wan0",
             } counter accept comment "Allow trusted LAN to WAN"
 
             # Allow established WAN to return
             iifname {
-                    "enp2s0",
+                    "wan0",
             } oifname {
                     "br-lan0",
                     "wg0",
@@ -139,11 +139,11 @@ with lib;
             type nat hook output priority filter; policy accept;
           }
 
-          # Setup NAT masquerading on the enp2s0 interface
+          # Setup NAT masquerading on the wan0 interface
           chain postrouting {
             type nat hook postrouting priority filter; policy accept;
             oifname {
-              "enp2s0"
+              "wan0"
             } masquerade
           }
         }
@@ -154,6 +154,34 @@ with lib;
   systemd.network = {
     enable = true;
 
+    links = {
+      "40-wan0" = {
+        linkConfig.Name = "wan0";
+        matchConfig.MACAddress = "00:e2:69:5c:75:b9";
+      };
+      "40-lan0" = {
+        linkConfig.Name = "lan0";
+        matchConfig.MACAddress = "00:e2:69:5c:75:ba";
+      };
+      "40-lan1" = {
+        linkConfig.Name = "lan1";
+        matchConfig.MACAddress = "00:e2:69:5c:75:bb";
+      };
+      "40-lan2" = {
+        linkConfig.Name = "lan2";
+        matchConfig.MACAddress = "00:e2:69:5c:75:bc";
+      };
+      "40-wifi0" = {
+        linkConfig.Name = "wifi0";
+        matchConfig.MACAddress = "00:0a:52:07:f5:9e";
+      };
+      "40-wifi1" = {
+        linkConfig.Name = "wifi1";
+        matchConfig.MACAddress = "00:0a:52:07:f5:9f";
+      };
+    };
+
+    /*
     wait-online = {
       timeout = 10;
       ignoredInterfaces = [
@@ -161,7 +189,7 @@ with lib;
         "wlan1"
         "wlp1s0"
       ];
-    };
+    };*/
 
     netdevs = {
       br-lan0 = {
@@ -200,40 +228,46 @@ with lib;
     };
 
     networks = {
-      enp2s0 = {
-        name = "enp2s0";
+      wan0 = {
+        name = "wan0";
         DHCP = "yes";
         dhcpV4Config = {
           UseDNS = false;
         };
+        linkConfig.RequiredForOnline = true;
       };
 
-      enp3s0 = {
-        name = "enp3s0";
+      lan0 = {
+        name = "lan0";
         DHCP = "no";
         bridge = [ "br-lan0" ];
+        linkConfig.RequiredForOnline = false;
       };
 
-      enp4s0 = {
-        name = "enp4s0";
+      lan1 = {
+        name = "lan1";
         DHCP = "no";
         bridge = [ "br-lan0" ];
+        linkConfig.RequiredForOnline = false;
       };
 
-      enp5s0 = {
-        name = "enp5s0";
+      lan2 = {
+        name = "lan2";
         DHCP = "no";
         bridge = [ "br-lan0" ];
+        linkConfig.RequiredForOnline = false;
       };
 
-      wlan1 = {
-        name = "wlan1";
+      wifi0 = {
+        name = "wifi0";
         DHCP = "no";
+        linkConfig.RequiredForOnline = false;
       };
 
-      wlp1s0 = {
-        name = "wlp1s0";
+      wifi1 = {
+        name = "wifi1";
         DHCP = "no";
+        linkConfig.RequiredForOnline = false;
       };
 
       br-lan0 = {
@@ -248,12 +282,14 @@ with lib;
           PoolOffset = 20;
           DNS = [ "192.168.200.1" ];
         };
+        linkConfig.RequiredForOnline = false;
       };
 
       wg0 = {
         name = "wg0";
         DHCP = "no";
         address = [ "10.100.0.1/24" ];
+        linkConfig.RequiredForOnline = false;
       };
     };
   };
