@@ -17,6 +17,8 @@ with lib;
       packages = with pkgs; [ dconf ];
     };
 
+    programs.dconf.enable = true;
+
     networking.networkmanager ={
       enable = true;
       plugins = with pkgs; [

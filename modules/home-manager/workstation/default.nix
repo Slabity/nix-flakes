@@ -521,5 +521,10 @@ in
 
       Xft.dpi: 96
     '';
+
+    services.easyeffects = {
+      enable = true;
+      preset = "Chipmunk";
+    };
   };
 }

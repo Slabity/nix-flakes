@@ -21,7 +21,7 @@ with lib;
       gimp
       blender
 
-      discord
+      discord-canary
       element-desktop
 
       transmission
@@ -30,6 +30,9 @@ with lib;
 
       spotify
       mpv
+
+      helvum
+      easyeffects
     ];
   };
 }
