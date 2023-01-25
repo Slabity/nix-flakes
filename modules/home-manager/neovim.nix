@@ -1,6 +1,6 @@
 { config, lib, pkgs, flake, ... }:
 let
-  rustChannel = pkgs.preferredRustChannel;
+  #rustChannel = pkgs.preferredRustChannel;
 in
 {
   config = {
@@ -16,9 +16,11 @@ in
       withRuby = true;
 
       extraPackages = [
-        rustChannel.rust
-        rustChannel.rust-src
-        pkgs.rustfmt
+        #rustChannel.rust
+        #rustChannel.rust-src
+        pkgs.rustPackages.rustc
+        pkgs.rustPackages.rustfmt
+        pkgs.rustPackages.rustPlatform.rustLibSrc
       ];
 
       extraPython3Packages = ps: with ps; [
@@ -81,7 +83,8 @@ in
 
           let $LOG_LEVEL='TRACE'
           let $RUST_LOG='rls=TRACE'
-          let $RUST_SRC_PATH='${rustChannel.rust-src}/lib/rustlib/src/rust/library'
+          " let $RUST_SRC_PATH='rustChannel.rust-src/lib/rustlib/src/rust/library'
+          let $RUST_SRC_PATH='${pkgs.rustPackages.rustPlatform.rustLibSrc}'
       '';
 
       plugins = with pkgs.vimPlugins; [
@@ -128,7 +131,7 @@ in
 
               require'lspconfig'.rust_analyzer.setup {
                 enabled = true;
-                cmd = { "${rustChannel.rust-analyzer-preview}/bin/rust-analyzer" }
+                cmd = { "${pkgs.rust-analyzer}/bin/rust-analyzer" }
               }
 
               require'lspconfig'.rnix.setup {

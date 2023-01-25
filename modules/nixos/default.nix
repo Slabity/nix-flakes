@@ -35,7 +35,6 @@ with lib;
 
     programs.neovim = {
       enable = true;
-      package = pkgs.neovim-nightly;
     };
 
     nix = {
@@ -62,8 +61,6 @@ with lib;
 
     nixpkgs = {
       overlays = [
-        flake.mozilla.overlay
-        flake.neovim-nightly-overlay.overlay
         flake.overlays.personal
       ];
       config.allowUnfree = true;
@@ -71,8 +68,6 @@ with lib;
 
     system.extraSystemBuilderCmds = ''
       mkdir -pv $out/overlays
-      ln -sv ${flake.mozilla} $out/overlays/mozilla
-      ln -sv ${flake.neovim-nightly-overlay} $out/overlays/neovim
       ln -sv ${../../overlays/personal} $out/overlays/personal
     '';
 

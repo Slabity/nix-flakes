@@ -31,7 +31,7 @@ with lib;
       spotify
       mpv
 
-      helvum
+      #helvum
       easyeffects
     ];
   };
