@@ -28,9 +28,13 @@
   };
 
   hardware.opengl.package = let
-    staging = import (builtins.fetchTarball "https://github.com/nixos/nixpkgs/tarball/staging-next") { config = config.nixpkgs.config; };
     llvm15 = import (builtins.fetchTarball "https://github.com/rrbutani/nixpkgs/tarball/feature/llvm-15") { config = config.nixpkgs.config; };
-  in (staging.mesa.override { llvmPackages = llvm15.llvmPackages_15; enableOpenCL = false; }).drivers;
+  in (pkgs.mesa.override { llvmPackages = llvm15.llvmPackages_15; enableOpenCL = true; }).drivers;
+
+  # Disable the odd Vulkan Loader stuff with this
+  environment.variables = {
+    DISABLE_LAYER_AMD_SWITCHABLE_GRAPHICS_1 = "1";
+  };
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "performance";
   hardware.video.hidpi.enable = lib.mkDefault true;
