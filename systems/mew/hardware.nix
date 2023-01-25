@@ -27,6 +27,11 @@
     options = [ "noatime,compress=zstd:1,ssd,space_cache=v2,subvol=data" ];
   };
 
+  hardware.opengl.package = let
+    staging = import (builtins.fetchTarball "https://github.com/nixos/nixpkgs/tarball/staging-next") { config = config.nixpkgs.config; };
+    llvm15 = import (builtins.fetchTarball "https://github.com/rrbutani/nixpkgs/tarball/feature/llvm-15") { config = config.nixpkgs.config; };
+  in (staging.mesa.override { llvmPackages = llvm15.llvmPackages_15; enableOpenCL = false; }).drivers;
+
   powerManagement.cpuFreqGovernor = lib.mkDefault "performance";
   hardware.video.hidpi.enable = lib.mkDefault true;
 }
