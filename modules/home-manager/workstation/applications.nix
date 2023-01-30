@@ -19,7 +19,7 @@ with lib;
       feh
       krita
       gimp
-      blender
+      blender-hip
 
       discord-canary
       element-desktop

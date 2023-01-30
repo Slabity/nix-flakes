@@ -1,7 +1,4 @@
 { config, lib, pkgs, flake, ... }:
-let
-  #rustChannel = pkgs.preferredRustChannel;
-in
 {
   config = {
     programs.neovim = {
