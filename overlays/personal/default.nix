@@ -8,12 +8,6 @@ final: prev:
     propagatedBuildInputs = old.propagatedBuildInputs ++ [ final.libdrm ];
   });
 
-  preferredRustChannel = final.rustChannelOf {
-    sha256 = "sha256-eOelUXavAqK4nMCGz5RrQNz5SGAtB+o6X/V3IkRmEao=";
-    date = "2022-07-22";
-    channel = "nightly";
-  };
-
   vulkan-loader = prev.vulkan-loader.overrideAttrs (old: {
     cmakeFlags = [
       "-DSYSCONFDIR=${final.addOpenGLRunpath.driverLink}/share"
@@ -49,19 +43,6 @@ final: prev:
     ];
   });
 
-  /*
-  freecad = prev.freecad.overrideAttrs(old: {
-    version = "0.20";
-
-    src = prev.fetchFromGitHub {
-      owner = "FreeCAD";
-      repo = "FreeCAD";
-      rev = "master";
-      hash = "sha256-nSyWrvXOLjcvbcbil0ZZBb9mcmmWrkdeicv68pFAErM=";
-    };
-    });
-    */
-
   bcachefs-tools = prev.bcachefs-tools.overrideAttrs(old: {
     buildInputs = old.buildInputs ++ [
       final.makeWrapper
@@ -82,6 +63,4 @@ final: prev:
       sha256 = "sha256-YYxs9pHJvpMVasUeU06rpNn54esmgP3Wbi/LmPGqhGk=";
     };
   });
-
-  discord = prev.discord.override { nss = final.nss_latest; };
 }
