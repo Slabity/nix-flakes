@@ -27,14 +27,14 @@
     options = [ "noatime,compress=zstd:1,ssd,space_cache=v2,subvol=data" ];
   };
 
-  hardware.opengl.package = let
-    llvm15 = import (builtins.fetchTarball "https://github.com/rrbutani/nixpkgs/tarball/feature/llvm-15") { config = config.nixpkgs.config; };
-  in (pkgs.mesa.override { llvmPackages = llvm15.llvmPackages_15; enableOpenCL = true; }).drivers;
-
   # Disable the odd Vulkan Loader stuff with this
   environment.variables = {
     DISABLE_LAYER_AMD_SWITCHABLE_GRAPHICS_1 = "1";
   };
+
+  systemd.tmpfiles.rules = [
+    "L+    /opt/rocm/hip   -    -    -     -    ${pkgs.hip}"
+  ];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "performance";
   hardware.video.hidpi.enable = lib.mkDefault true;
