@@ -1,22 +1,5 @@
 final: prev:
 {
-  remarkable-mouse = prev.remarkable-mouse.overrideAttrs (old: {
-    src = fetchGit {
-      url = "https://github.com/davidsharp/remarkable_mouse";
-    };
-
-    propagatedBuildInputs = old.propagatedBuildInputs ++ [ final.libdrm ];
-  });
-
-  vulkan-loader = prev.vulkan-loader.overrideAttrs (old: {
-    cmakeFlags = [
-      "-DSYSCONFDIR=${final.addOpenGLRunpath.driverLink}/share"
-      "-DVULKAN_HEADERS_INSTALL_DIR=${final.vulkan-headers}"
-      "-DBUILD_WSI_WAYLAND_SUPPORT=ON"
-      "-DCMAKE_INSTALL_INCLUDEDIR=${final.vulkan-headers}/include"
-    ];
-  });
-
   wine = prev.wine.override ({
     wineRelease = "staging";
     wineBuild = "wineWow";
@@ -63,4 +46,6 @@ final: prev:
       sha256 = "sha256-YYxs9pHJvpMVasUeU06rpNn54esmgP3Wbi/LmPGqhGk=";
     };
   });
+
+  discordcanary = prev.discordcanary.override { nss = final.nss_latest; };
 }
