@@ -43,5 +43,11 @@
       zsh-completions
       nix-zsh-completions
     ];
+
+    programs.direnv = {
+      enable = true;
+      enableZshIntegration = true;
+      nix-direnv.enable = true;
+    };
   };
 }
