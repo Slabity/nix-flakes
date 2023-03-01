@@ -16,6 +16,7 @@
         #rustChannel.rust
         #rustChannel.rust-src
         pkgs.rustPackages.rustc
+        pkgs.rustPackages.cargo
         pkgs.rustPackages.rustfmt
         pkgs.rustPackages.rustPlatform.rustLibSrc
       ];
