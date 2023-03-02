@@ -477,7 +477,7 @@ in
       };
     };
 
-    programs.mako = {
+    services.mako = {
       enable = true;
       anchor = "top-right";
       font = "Terminus 12";
