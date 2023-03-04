@@ -103,16 +103,16 @@ with lib;
           }
 
           # Enable flow offloading for better throughput
-          flowtable f {
-            hook ingress priority 0;
-            devices = { wan0, lan0, lan1, lan2 };
-          }
+          #flowtable f {
+          #  hook ingress priority 0;
+          #  devices = { wan0, br-lan0 };
+          #}
 
           chain forward {
             type filter hook forward priority filter; policy drop;
 
             # enable flow offloading for better throughput
-            ip protocol { tcp, udp } flow offload @f
+            #ip protocol { tcp, udp } flow offload @f
 
             # Allow trusted network WAN access
             iifname {
@@ -181,16 +181,6 @@ with lib;
       };
     };
 
-    /*
-    wait-online = {
-      timeout = 10;
-      ignoredInterfaces = [
-        "wlan0"
-        "wlan1"
-        "wlp1s0"
-      ];
-    };*/
-
     netdevs = {
       br-lan0 = {
         netdevConfig = {
@@ -232,7 +222,7 @@ with lib;
         name = "wan0";
         DHCP = "yes";
         dhcpV4Config = {
-          UseDNS = false;
+          UseDNS = true;
         };
         linkConfig.RequiredForOnline = true;
       };
@@ -261,26 +251,23 @@ with lib;
       wifi0 = {
         name = "wifi0";
         DHCP = "no";
+        bridge = [ "br-lan0" ];
         linkConfig.RequiredForOnline = false;
       };
 
       wifi1 = {
         name = "wifi1";
         DHCP = "no";
+        bridge = [ "br-lan0" ];
         linkConfig.RequiredForOnline = false;
       };
 
       br-lan0 = {
         name = "br-lan0";
-        DHCP = "no";
+        DHCP = "yes";
         address = [ "192.168.200.1/24" ];
         networkConfig = {
           ConfigureWithoutCarrier = true;
-          DHCPServer = true;
-        };
-        dhcpServerConfig = {
-          PoolOffset = 20;
-          DNS = [ "192.168.200.1" ];
         };
         linkConfig.RequiredForOnline = false;
       };
@@ -294,30 +281,45 @@ with lib;
     };
   };
 
-  services.resolved.enable = true;
-  services.resolved.extraConfig = "DNSStubListener=no";
+  services.hostapd = {
+    enable = true;
+    countryCode = "US";
+    interface = "wifi0";
+    ssid = "Lapras-2.4GHz";
+    wpaPassphrase = "THISISATEST9542";
+  };
 
-  services.unbound = {
+  services.resolved = {
+    enable = true;
+    extraConfig = "DNSStubListener=no";
+  };
+
+  services.dnsmasq = {
     enable = true;
     settings = {
-      server = {
-        interface = [
-          "::"
-          "0.0.0.0"
-        ];
-        access-control = [
-          "0.0.0.0/0 allow"
-          "::0/0 allow"
-        ];
-      };
-      forward-zone = [
-        {
-          name = ".";
-          forward-addr = [
-            "1.1.1.1"
-            "1.0.0.1"
-          ];
-        }
+      interface = [ "br-lan0" ];
+
+      domain-needed = true;
+      domain = "lan";
+      local = "/lan/";
+
+      bogus-priv = true;
+      dhcp-range = [ "192.168.200.20, 192.168.200.249" ];
+
+      no-hosts = true;
+      expand-hosts = true;
+
+      addn-hosts = ''
+        ${pkgs.writeText "dnsmasq-addn-hosts.conf" ''
+          192.168.200.1 lapras
+        ''}
+      '';
+
+      cache-size = 1000;
+      server = [
+        "1.1.1.1"
+        "8.8.8.8"
+        "8.8.4.4"
       ];
     };
   };
