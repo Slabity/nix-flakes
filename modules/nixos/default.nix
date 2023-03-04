@@ -42,7 +42,17 @@ with lib;
       gc.automatic = true;
       optimise.automatic = true;
 
-      settings.trusted-users = [ "root" "@wheel" ];
+      settings = {
+        trusted-users = [ "root" "@wheel" ];
+
+        substituters = [
+          "https://nix-community.cachix.org"
+        ];
+
+        trusted-public-keys = [
+          "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+        ];
+      };
 
       # Make builds run with low priority so my system stays responsive
       daemonCPUSchedPolicy = "idle";

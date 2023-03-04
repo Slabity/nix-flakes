@@ -3,7 +3,7 @@
 
   inputs = {
     secrets.url = "flake:secrets";
-    nixpkgs.url = "github:NixOS/nixpkgs/master";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     home-manager = {
       url = "github:nix-community/home-manager";
