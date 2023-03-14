@@ -76,4 +76,11 @@
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   hardware.video.hidpi.enable = lib.mkDefault true;
+
+  services.tlp = {
+    enable = true;
+    settings = {
+      USB_DENYLIST="0bda:8156";
+    };
+  };
 }
