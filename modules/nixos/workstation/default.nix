@@ -129,5 +129,7 @@ with lib;
       ps3Controller = true;
       wacomCintiq16Pro = true;
     };
+
+    services.flatpak.enable = true;
   };
 }
