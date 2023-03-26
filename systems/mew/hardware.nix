@@ -37,5 +37,4 @@
   ];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "performance";
-  hardware.video.hidpi.enable = lib.mkDefault true;
 }
