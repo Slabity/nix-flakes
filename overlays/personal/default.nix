@@ -1,24 +1,5 @@
 final: prev:
 {
-  wine = prev.wine.override ({
-    wineRelease = "staging";
-    wineBuild = "wineWow";
-
-    pngSupport = true;
-    jpegSupport = true;
-    tiffSupport = true;
-    fontconfigSupport = true;
-    tlsSupport = true;
-    mpg123Support = true;
-    pulseaudioSupport = true;
-
-    openglSupport = true;
-    openalSupport = true;
-    openclSupport = true;
-    vulkanSupport = true;
-    sdlSupport = true;
-  });
-
   steam = (prev.steam.override {
     extraPkgs = pkgs: with pkgs; [
       gamemode.lib
@@ -47,5 +28,5 @@ final: prev:
     };
   });
 
-  discordcanary = prev.discordcanary.override { nss = final.nss_latest; };
+  discord-canary = prev.discord-canary.override { nss = final.nss_latest; };
 }
