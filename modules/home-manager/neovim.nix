@@ -128,13 +128,19 @@
               }
 
               require'lspconfig'.rust_analyzer.setup {
-                enabled = true;
+                enabled = true,
                 cmd = { "${pkgs.rust-analyzer}/bin/rust-analyzer" }
               }
 
               require'lspconfig'.rnix.setup {
-                enabled = true;
+                enabled = true,
                 cmd = { "${pkgs.rnix-lsp}/bin/rnix-lsp" }
+              }
+
+              require'lspconfig'.gdscript.setup {
+                enabled = true,
+                on_attach = on_attach,
+                flags = { debounce_text_changes = 150 }
               }
             EOF
           '';

@@ -3,10 +3,10 @@
 
   inputs = {
     secrets.url = "flake:secrets";
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nixos-hardware.url = "github:NixOS/nixos-hardware";
+    nixpkgs.url = "flake:nixpkgs";
+    nixos-hardware.url = "flake:nixos-hardware";
     home-manager = {
-      url = "github:nix-community/home-manager";
+      url = "flake:home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
