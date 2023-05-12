@@ -12,6 +12,7 @@
       withPython3 = true;
       withRuby = true;
 
+      /*
       extraPackages = [
         #rustChannel.rust
         #rustChannel.rust-src
@@ -19,16 +20,18 @@
         pkgs.rustPackages.cargo
         pkgs.rustPackages.rustfmt
         pkgs.rustPackages.rustPlatform.rustLibSrc
-      ];
+        ];
+        */
 
+        /*
       extraPython3Packages = ps: with ps; [
         #pyls-mypy
         #pyls-isort
         #pyls-black
-      ];
+        ];
+        */
 
       extraConfig = ''
-
           filetype plugin on
           syntax enable
           set background=dark
@@ -79,10 +82,10 @@
           set foldmethod=syntax
           set mouse=v
 
-          let $LOG_LEVEL='TRACE'
-          let $RUST_LOG='rls=TRACE'
+          " let $LOG_LEVEL='TRACE'
+          " let $RUST_LOG='rls=TRACE'
           " let $RUST_SRC_PATH='rustChannel.rust-src/lib/rustlib/src/rust/library'
-          let $RUST_SRC_PATH='${pkgs.rustPackages.rustPlatform.rustLibSrc}'
+          " let $RUST_SRC_PATH='${pkgs.rustPackages.rustPlatform.rustLibSrc}'
       '';
 
       plugins = with pkgs.vimPlugins; [
@@ -126,21 +129,24 @@
                 "   (Operator)",
                 "   (TypeParameter)"
               }
-
-              require'lspconfig'.rust_analyzer.setup {
-                enabled = true,
-                cmd = { "${pkgs.rust-analyzer}/bin/rust-analyzer" }
-              }
-
-              require'lspconfig'.rnix.setup {
-                enabled = true,
-                cmd = { "${pkgs.rnix-lsp}/bin/rnix-lsp" }
-              }
-
-              require'lspconfig'.gdscript.setup {
-                enabled = true,
-                on_attach = on_attach,
-                flags = { debounce_text_changes = 150 }
+            EOF
+          '';
+        }
+        {
+          plugin = lazy-lsp-nvim;
+          config = ''
+            lua << EOF
+              require('lazy-lsp').setup {
+                excluded_servers = {
+                  "sqls",
+                },
+                default_config = {
+                  flags = {
+                    debounce_text_changes = 150,
+                    on_attach = on_attach,
+                    capabilities = capabilities,
+                  },
+                },
               }
             EOF
           '';
