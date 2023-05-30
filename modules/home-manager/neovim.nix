@@ -129,6 +129,8 @@
                 "   (Operator)",
                 "   (TypeParameter)"
               }
+
+              require('lspconfig').gdscript.setup{}
             EOF
           '';
         }
