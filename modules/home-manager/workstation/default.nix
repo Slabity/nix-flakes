@@ -75,7 +75,7 @@ in
 
     wayland.windowManager.sway = {
       enable = true;
-      systemdIntegration = true;
+      systemd.enable = true;
       package = null;
       config = {
         modifier = "Mod4";
@@ -132,6 +132,7 @@ in
         gaps = {
           inner = 2;
         };
+        focus.newWindow = "urgent";
         keybindings = let modifier = "Mod4"; in {
           "${modifier}+Return" = "exec ${pkgs.alacritty}/bin/alacritty";
           "${modifier}+Shift+q" = "kill";

@@ -58,6 +58,7 @@ with lib;
       enable = true;
       wlr.enable = true;
       extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
+      xdgOpenUsePortal = true;
     };
 
     hardware = {
