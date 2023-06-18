@@ -79,7 +79,7 @@
   services.tlp = {
     enable = true;
     settings = {
-      USB_DENYLIST="0bda:8156";
+      USB_DENYLIST="0bda:8156 0bda:0328";
     };
   };
 }
