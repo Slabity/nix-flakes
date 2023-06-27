@@ -336,7 +336,7 @@ with lib;
       workstation = true;
     };
     wideArea = true;
-    interfaces = [
+    allowInterfaces = [
       "br-lan0"
       "wg0"
     ];
