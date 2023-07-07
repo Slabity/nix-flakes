@@ -56,7 +56,7 @@ let
       schema = pkgs.gsettings-desktop-schemas;
       datadir = "${schema}/share/gsettings-schemas/${schema.name}";
     in ''
-      export XDG_DATA_DIRS=${datadir}:$XDG_DATA_DIRS
+      export XDG_DATA_DIRS=$XDG_DATA_DIRS:${datadir}
       gsettings set org.gnome.desktop.interface gtk-theme 'Arc-Dark'
     '';
   };

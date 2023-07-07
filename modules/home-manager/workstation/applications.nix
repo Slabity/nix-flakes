@@ -12,7 +12,7 @@ with lib;
     };
 
     home.packages = with pkgs; [
-      firefox-wayland
+      firefox
 
       super-slicer-latest
 

@@ -27,6 +27,4 @@ final: prev:
       sha256 = "sha256-YYxs9pHJvpMVasUeU06rpNn54esmgP3Wbi/LmPGqhGk=";
     };
   });
-
-  discord-canary = prev.discord-canary.override { nss = final.nss_latest; };
 }
