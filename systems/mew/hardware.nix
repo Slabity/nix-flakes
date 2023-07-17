@@ -27,6 +27,12 @@
     options = [ "noatime,compress=zstd:1,ssd,space_cache=v2,subvol=data" ];
   };
 
+  fileSystems."/home/steam" = {
+    device = "/dev/disk/by-uuid/6d9f38d0-68a9-41b6-a66b-2859156ef46b";
+    fsType = "btrfs";
+    options = [ "noatime,ssd,space_cache=v2,subvol=steam" ];
+  };
+
   # Disable the odd Vulkan Loader stuff with this
   environment.variables = {
     DISABLE_LAYER_AMD_SWITCHABLE_GRAPHICS_1 = "1";
