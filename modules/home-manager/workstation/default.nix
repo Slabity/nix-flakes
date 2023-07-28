@@ -36,7 +36,10 @@ in
 
     wayland.windowManager.sway = {
       enable = true;
-      systemd.enable = true;
+      systemd = {
+        enable = true;
+        xdgAutostart = true;
+      };
       package = null;
       config = {
         modifier = "Mod4";

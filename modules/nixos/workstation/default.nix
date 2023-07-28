@@ -36,8 +36,8 @@ with lib;
     };
 
     fonts = {
-      enableDefaultFonts = true;
-      fonts = with pkgs; [
+      enableDefaultPackages = true;
+      packages = with pkgs; [
         corefonts source-code-pro source-sans-pro source-serif-pro
         font-awesome terminus_font powerline-fonts google-fonts inconsolata noto-fonts
         noto-fonts-cjk unifont ubuntu_font_family nerdfonts
@@ -122,6 +122,14 @@ with lib;
 
       pavucontrol
       xdg-utils
+
+      # Required because all polkit agents are stupid
+      (pkgs.runCommand "polkit-sway" { preferLocalBuild = true; } ''
+        mkdir -p $out/etc/xdg/autostart/
+        sed -e 's/^OnlyShowIn=.*$/OnlyShowIn=sway;/' \
+            -e 's/^AutostartCondition=.*$/AutostartCondition=sway;/' \
+        ${pkgs.polkit_gnome}/etc/xdg/autostart/polkit-gnome-authentication-agent-1.desktop > $out/etc/xdg/autostart/polkit-sway-authentication-agent-1.desktop
+      '')
     ];
 
     hardware.inputDevices = {
@@ -130,5 +138,7 @@ with lib;
     };
 
     services.flatpak.enable = true;
+
+    services.input-remapper.enable = true;
   };
 }
