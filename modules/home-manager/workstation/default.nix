@@ -349,48 +349,89 @@ in
       '';
     };
 
-    programs.rofi = {
+    programs.wofi = {
       enable = true;
-      font = "Terminus 12";
-      theme = "Arc-Dark";
+      settings = {
+        width = 400;
+      };
+      style = ''
+        * {
+          font-family: monospace;
+        }
+
+        window {
+          margin: 0px;
+          border: 1px solid ${colors.normal.magenta};
+          background-color: ${colors.primary.background};
+        }
+
+        #input {
+          margin: 5px;
+          border: none;
+          color: ${colors.primary.foreground};
+          background-color: ${colors.primary.background};
+        }
+
+        #inner-box {
+          margin: 5px;
+          border: none;
+          background-color: ${colors.primary.background};
+        }
+
+        #outer-box {
+          margin: 5px;
+          border: none;
+          background-color: ${colors.primary.background};
+        }
+
+        #scroll {
+          margin: 0px;
+          border: none;
+        }
+
+        #text {
+          margin: 5px;
+          border: none;
+          color: ${colors.primary.foreground};
+        }
+
+        #entry:selected {
+          background-color: ${colors.primary.background};
+        }
+      '';
     };
 
-    services.kanshi = {
+    services.kanshi = let
+      primary = {
+        criteria = "Dell Inc. AW3423DWF H5K52S3";
+        mode = "3440x1440";
+        position = "1440,1120";
+      };
+      secondary = {
+        criteria = "HYC CO., LTD.  Unknown";
+        mode = "2560x1440";
+        position = "0,0";
+        transform = "90";
+      };
+      tablet = {
+        criteria = "Wacom Tech Cintiq Pro_16 2CQ0191001523";
+        mode = "3840x2160";
+        position = "4880,2460";
+      };
+    in {
       enable = true;
       profiles = {
         default = {
           outputs = [
-            {
-              criteria = "DP-2";
-              mode = "2560x1440";
-              position = "0,0";
-              transform = "90";
-            }
-            {
-              criteria = "HDMI-A-2";
-              mode = "3440x1440";
-              position = "1440,900";
-            }
+            primary
+            secondary
           ];
         };
-        default_vr = {
+        default_tablet = {
           outputs = [
-            {
-              criteria = "DP-2";
-              mode = "2560x1440";
-              position = "0,0";
-              transform = "90";
-            }
-            {
-              criteria = "HDMI-A-2";
-              mode = "3440x1440";
-              position = "1440,900";
-            }
-            {
-              criteria = "DP-1";
-              mode = "2880x1600";
-              status = "disable";
-            }
+            primary
+            secondary
+            tablet
           ];
         };
       };

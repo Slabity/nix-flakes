@@ -47,6 +47,7 @@ with lib;
         defaultFonts.monospace = [
           "Terminess Powerline"
           "TerminessTTF Nerd Font Mono"
+          #"Terminess Nerd Font"
         ];
         defaultFonts.emoji = [ "Noto Color Emoji" ];
         hinting.enable = true;

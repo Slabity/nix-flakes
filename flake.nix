@@ -2,13 +2,15 @@
   description = "Personal flakes for my systems";
 
   inputs = {
-    secrets.url = "flake:secrets";
     nixpkgs.url = "flake:nixpkgs";
     nixos-hardware.url = "flake:nixos-hardware";
     home-manager = {
       url = "flake:home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Local flake that stores things I don't publish
+    secrets.url = "flake:secrets";
   };
 
   outputs = { self, ... }@inputs:
