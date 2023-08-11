@@ -141,5 +141,7 @@ with lib;
     services.flatpak.enable = true;
 
     services.input-remapper.enable = true;
+
+    programs.kdeconnect.enable = true;
   };
 }

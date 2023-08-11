@@ -529,7 +529,7 @@ in
 
     services.easyeffects = {
       enable = true;
-      preset = "Chipmunk";
+      preset = "Default";
     };
   };
 }
