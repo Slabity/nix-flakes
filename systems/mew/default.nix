@@ -17,8 +17,10 @@ with lib;
   users.users.slabity = {
     isNormalUser = true;
     extraGroups = [
-      "wheel"
-      "video"
+      "wheel"  # Permissions for `sudo`
+      "video"  # Permissions for GPU modesetting
+      "render" # Permissions for GPU rendering
+      "input"  # Permissions for input devices
     ];
   };
 
