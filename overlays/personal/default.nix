@@ -27,4 +27,6 @@ final: prev:
       sha256 = "sha256-YYxs9pHJvpMVasUeU06rpNn54esmgP3Wbi/LmPGqhGk=";
     };
   });
+
+  xwaylandvideobridge = final.libsForQt5.callPackage ./xwaylandvideobridge.nix { };
 }
