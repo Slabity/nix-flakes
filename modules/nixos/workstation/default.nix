@@ -4,6 +4,8 @@ with lib;
   imports = [
     ./gaming.nix
     ./applications.nix
+    ./networking.nix
+    ./fonts.nix
   ];
 
   options.workstation = {
@@ -12,54 +14,17 @@ with lib;
   };
 
   config = mkIf config.workstation.enable {
+    services.greetd = {
+      enable = true;
+    };
+
+    programs.regreet = {
+      enable = true;
+    };
+
     services.dbus = {
       enable = true;
       packages = with pkgs; [ dconf ];
-    };
-
-    programs.dconf.enable = true;
-
-    networking.networkmanager ={
-      enable = true;
-      plugins = with pkgs; [
-        networkmanager-openvpn
-        networkmanager-openconnect
-        networkmanager-vpnc
-      ];
-      unmanaged = [ "interface-name:ve-*" ];
-    };
-
-    services.resolved.enable = true;
-    services.avahi = {
-      enable = true;
-      nssmdns = true;
-    };
-
-    fonts = {
-      enableDefaultPackages = true;
-      packages = with pkgs; [
-        corefonts source-code-pro source-sans-pro source-serif-pro
-        font-awesome terminus_font powerline-fonts google-fonts inconsolata noto-fonts
-        noto-fonts-cjk unifont ubuntu_font_family nerdfonts
-      ];
-      fontconfig = {
-        enable = true;
-        defaultFonts.monospace = [
-          "Terminess Powerline"
-          "TerminessTTF Nerd Font Mono"
-          #"Terminess Nerd Font"
-        ];
-        defaultFonts.emoji = [ "Noto Color Emoji" ];
-        hinting.enable = true;
-        antialias = true;
-      };
-    };
-
-    xdg.portal = {
-      enable = true;
-      wlr.enable = true;
-      extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
-      xdgOpenUsePortal = true;
     };
 
     hardware = {
@@ -68,6 +33,8 @@ with lib;
         package = pkgs.bluez;
       };
       keyboard.uhk.enable = true;
+      ps3Controller = true;
+      wacomCintiq16Pro = true;
     };
 
     services.pipewire = {
@@ -80,6 +47,11 @@ with lib;
       socketActivation = true;
     };
 
+    programs.hyprland = {
+      enable = true;
+      package = flake.hyprland.packages.${pkgs.system}.hyprland;
+    };
+
     programs.sway = {
       enable = true;
       wrapperFeatures.gtk = true;
@@ -87,13 +59,22 @@ with lib;
 
     environment.sessionVariables = {
       GTK_USE_PORTAL = "1";
+      NIXOS_OZONE_WL = "1";
     };
+
+    xdg.portal = {
+      enable = true;
+      xdgOpenUsePortal = true;
+      wlr.enable = true;
+      extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    };
+
+    services.flatpak.enable = true;
+    services.input-remapper.enable = true;
+    programs.kdeconnect.enable = true;
 
     environment.systemPackages = with pkgs; [
       alacritty # terminal
-
-      swaylock # lockscreen
-      swayidle
 
       xwayland # for legacy apps
       xorg.xrandr
@@ -133,15 +114,5 @@ with lib;
       '')
     ];
 
-    hardware.inputDevices = {
-      ps3Controller = true;
-      wacomCintiq16Pro = true;
-    };
-
-    services.flatpak.enable = true;
-
-    services.input-remapper.enable = true;
-
-    programs.kdeconnect.enable = true;
   };
 }
