@@ -2,15 +2,17 @@
   description = "Personal flakes for my systems";
 
   inputs = {
-    nixpkgs.url = "flake:nixpkgs";
+    # Local flake that stores things I don't publish
+    secrets.url = "flake:secrets";
+
+    nixpkgs.url = "flake:nixpkgs-master";
     nixos-hardware.url = "flake:nixos-hardware";
     home-manager = {
       url = "flake:home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Local flake that stores things I don't publish
-    secrets.url = "flake:secrets";
+    hyprland.url = "github:hyprwm/Hyprland";
   };
 
   outputs = { self, ... }@inputs:
