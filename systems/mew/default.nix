@@ -10,7 +10,7 @@ with lib;
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  system.stateVersion = "22.11";
+  system.stateVersion = "23.11";
 
   time.timeZone = "America/New_York";
 
@@ -35,7 +35,7 @@ with lib;
           workstation.enable = true;
         }
       ];
-      home.stateVersion = "22.11";
+      home.stateVersion = "23.11";
 
       fullName = "${flake.secrets.personal.fullName}";
       email = "${flake.secrets.personal.email}";
