@@ -36,24 +36,9 @@ with lib;
 
   services.openssh.enable = true;
 
-  boot.kernel.sysctl = {
-    # if you use ipv4, this is all you need
-    "net.ipv4.conf.all.forwarding" = true;
-
-    # If you want to use it for ipv6
-    "net.ipv6.conf.all.forwarding" = true;
-
-    # source: https://github.com/mdlayher/homelab/blob/master/nixos/routnerr-2/configuration.nix#L52
-    # By default, not automatically configure any IPv6 addresses.
-    "net.ipv6.conf.all.accept_ra" = 0;
-    "net.ipv6.conf.all.autoconf" = 0;
-    "net.ipv6.conf.all.use_tempaddr" = 0;
-
-    # On WAN, allow IPv6 autoconfiguration and tempory address use.
-    "net.ipv6.conf.wan0.accept_ra" = 2;
-    "net.ipv6.conf.wan0.autoconf" = 1;
+  services.tailscale = {
+    enable = true;
   };
-
 
   networking = {
     hostName = "lapras";
@@ -80,19 +65,11 @@ with lib;
               "lo",
               "br-lan0",
               "wg0",
-            } tcp dport { llmnr } counter accept
-
-
-            # Accept all access from these trusted interfaces
-            iifname {
-              "lo",
-              "br-lan0",
-              "wg0",
             } counter accept
 
-
             # Allow certain ports access to the router
-            iifname "wan0" tcp dport { ssh } counter accept
+            iifname "wan0" tcp dport { 22422 } counter accept
+            iifname "wan0" udp dport { 22422 } counter accept
             iifname "wan0" udp dport {
               ${builtins.toString flake.secrets.wireguard.lapras.port}
             } counter accept
@@ -137,6 +114,10 @@ with lib;
         table ip nat {
           chain prerouting {
             type nat hook output priority filter; policy accept;
+
+            # Port forwarding rules
+            tcp dport 22422 dnat 192.168.200.185:22
+            udp dport 22422 dnat 192.168.200.185:22
           }
 
           # Setup NAT masquerading on the wan0 interface
@@ -251,14 +232,14 @@ with lib;
       wifi0 = {
         name = "wifi0";
         DHCP = "no";
-        bridge = [ "br-lan0" ];
+        #bridge = [ "br-lan0" ];
         linkConfig.RequiredForOnline = false;
       };
 
       wifi1 = {
         name = "wifi1";
         DHCP = "no";
-        bridge = [ "br-lan0" ];
+        #bridge = [ "br-lan0" ];
         linkConfig.RequiredForOnline = false;
       };
 
@@ -281,12 +262,22 @@ with lib;
     };
   };
 
-  services.hostapd = {
-    enable = true;
-    countryCode = "US";
-    interface = "wifi0";
-    ssid = "Lapras-2.4GHz";
-    wpaPassphrase = "THISISATEST9542";
+  boot.kernel.sysctl = {
+    # if you use ipv4, this is all you need
+    "net.ipv4.conf.all.forwarding" = true;
+
+    # If you want to use it for ipv6
+    "net.ipv6.conf.all.forwarding" = true;
+
+    # source: https://github.com/mdlayher/homelab/blob/master/nixos/routnerr-2/configuration.nix#L52
+    # By default, not automatically configure any IPv6 addresses.
+    "net.ipv6.conf.all.accept_ra" = 0;
+    "net.ipv6.conf.all.autoconf" = 0;
+    "net.ipv6.conf.all.use_tempaddr" = 0;
+
+    # On WAN, allow IPv6 autoconfiguration and tempory address use.
+    "net.ipv6.conf.wan0.accept_ra" = 2;
+    "net.ipv6.conf.wan0.autoconf" = 1;
   };
 
   services.resolved = {
