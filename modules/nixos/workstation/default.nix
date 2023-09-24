@@ -14,14 +14,6 @@ with lib;
   };
 
   config = mkIf config.workstation.enable {
-    services.greetd = {
-      enable = true;
-    };
-
-    programs.regreet = {
-      enable = true;
-    };
-
     services.dbus = {
       enable = true;
       packages = with pkgs; [ dconf ];
@@ -33,8 +25,10 @@ with lib;
         package = pkgs.bluez;
       };
       keyboard.uhk.enable = true;
-      ps3Controller = true;
-      wacomCintiq16Pro = true;
+      inputDevices = {
+        ps3Controller = true;
+        wacomCintiq16Pro = true;
+      };
     };
 
     services.pipewire = {
