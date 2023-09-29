@@ -11,7 +11,7 @@
   boot.initrd.availableKernelModules = [ "xhci_pci" ];
   boot.initrd.kernelModules = [ ];
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxKernel.packages.linux_rpi4;
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
 
