@@ -5,7 +5,7 @@
     # Local flake that stores things I don't publish
     secrets.url = "flake:secrets";
 
-    nixpkgs.url = "flake:nixpkgs-master";
+    nixpkgs.url = "flake:nixpkgs";
     nixos-hardware.url = "flake:nixos-hardware";
     home-manager = {
       url = "flake:home-manager";
@@ -38,6 +38,14 @@
         system = "x86_64-linux";
         specialArgs = { inherit flake; };
         modules = [ ./systems/mew ];
+      };
+      rotom = nixpkgs.lib.nixosSystem {
+        system = "aarch64-linux";
+        specialArgs = { inherit flake; };
+        modules = [
+          ./systems/rotom
+          "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
+        ];
       };
 
       hyannis = nixpkgs.lib.nixosSystem {

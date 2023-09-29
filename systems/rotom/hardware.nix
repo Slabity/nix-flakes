@@ -1,7 +1,7 @@
 { config, lib, pkgs, flake, ... }:
 {
   imports = [
-    flake.nixos-hardware.nixosModules.raspvberry-pi-4
+    flake.nixos-hardware.nixosModules.raspberry-pi-4
   ];
 
   system.stateVersion = "23.11";
