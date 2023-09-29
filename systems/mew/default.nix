@@ -7,12 +7,13 @@ with lib;
     flake.home-manager.nixosModules.home-manager
   ];
 
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
+  networking.hostName = "mew";
   system.stateVersion = "23.11";
 
   time.timeZone = "America/New_York";
+
+  workstation.enable = true;
+  workstation.gaming.enable = true;
 
   users.users.slabity = {
     isNormalUser = true;
@@ -43,9 +44,6 @@ with lib;
   };
 
   services.openssh.enable = true;
-  services.openssh.settings.X11Forwarding = true;
 
-  networking.hostName = "mew";
-  workstation.enable = true;
-  workstation.gaming.enable = true;
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 }
