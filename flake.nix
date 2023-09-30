@@ -42,10 +42,7 @@
       rotom = nixpkgs.lib.nixosSystem {
         system = "aarch64-linux";
         specialArgs = { inherit flake; };
-        modules = [
-          ./systems/rotom
-          "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
-        ];
+        modules = [ ./systems/rotom ];
       };
 
       hyannis = nixpkgs.lib.nixosSystem {
