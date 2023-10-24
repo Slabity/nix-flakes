@@ -41,9 +41,5 @@
     DISABLE_LAYER_AMD_SWITCHABLE_GRAPHICS_1 = "1";
   };
 
-  systemd.tmpfiles.rules = [
-    "L+    /opt/rocm/hip   -    -    -     -    ${pkgs.hip}"
-  ];
-
   powerManagement.cpuFreqGovernor = lib.mkDefault "performance";
 }
