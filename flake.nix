@@ -5,7 +5,7 @@
     # Local flake that stores things I don't publish
     secrets.url = "flake:secrets";
 
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "flake:nixpkgs";
     nixos-hardware.url = "flake:nixos-hardware";
     home-manager = {
       url = "flake:home-manager";
