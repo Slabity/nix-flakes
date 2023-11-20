@@ -80,6 +80,12 @@
     enable = true;
     settings = {
       USB_DENYLIST="0bda:8156 0bda:0328";
+      USB_BLACKLIST="0bda:8156 0bda:0328";
     };
   };
+
+  services.udev.extraRules = ''
+    ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="0bda", ATTR{idProduct}=="8156", TEST=="power/control", ATTR{power/control}="on"
+    KERNEL=="cpu",RUN+="${pkgs.bash}/bin/sh -c 'echo -n 1 > /sys/devices/system/cpu/intel_pstate/no_turbo'"
+  '';
 }
