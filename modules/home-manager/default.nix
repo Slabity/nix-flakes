@@ -30,5 +30,12 @@ with lib;
       controlMaster = "yes";
       forwardAgent = true;
     };
+
+    nixpkgs.config = {
+      overlays = [
+        flake.overlays.personal
+      ];
+      config.allowUnfree = true;
+    };
   };
 }

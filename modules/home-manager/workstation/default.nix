@@ -192,24 +192,29 @@ in
         focus.newWindow = "urgent";
         keybindings = let modifier = "Mod4"; in {
           "${modifier}+Return" = "exec ${pkgs.alacritty}/bin/alacritty";
-          "${modifier}+Shift+q" = "kill";
           "${modifier}+d" = "exec --no-startup-id ${pkgs.wofi}/bin/wofi --show run";
+
+          "${modifier}+Shift+q" = "kill";
+          "${modifier}+space" = "focus mode_toggle";
+          "${modifier}+Shift+space" = "floating toggle";
+          "${modifier}+v" = "split v";
+          "${modifier}+s" = "layout stacking";
+          "${modifier}+w" = "layout tabbed";
+          "${modifier}+e" = "layout toggle split";
+
+          "${modifier}+f" = "fullscreen toggle";
+
           "${modifier}+k" = "focus up";
           "${modifier}+j" = "focus down";
           "${modifier}+h" = "focus left";
           "${modifier}+l" = "focus right";
           "${modifier}+a" = "focus parent";
-          "${modifier}+space" = "focus mode_toggle";
+
           "${modifier}+Shift+k" = "move up";
           "${modifier}+Shift+j" = "move down";
           "${modifier}+Shift+h" = "move left";
           "${modifier}+Shift+l" = "move right";
-          "${modifier}+v" = "split v";
-          "${modifier}+s" = "layout stacking";
-          "${modifier}+w" = "layout tabbed";
-          "${modifier}+e" = "layout toggle split";
-          "${modifier}+Shift+space" = "floating toggle";
-          "${modifier}+f" = "fullscreen toggle";
+
           "${modifier}+1" = "workspace 1";
           "${modifier}+2" = "workspace 2";
           "${modifier}+3" = "workspace 3";
@@ -220,6 +225,7 @@ in
           "${modifier}+8" = "workspace 8";
           "${modifier}+9" = "workspace 9";
           "${modifier}+0" = "workspace 10";
+
           "${modifier}+Shift+1" = "move container to workspace 1";
           "${modifier}+Shift+2" = "move container to workspace 2";
           "${modifier}+Shift+3" = "move container to workspace 3";
@@ -230,6 +236,10 @@ in
           "${modifier}+Shift+8" = "move container to workspace 8";
           "${modifier}+Shift+9" = "move container to workspace 9";
           "${modifier}+Shift+0" = "move container to workspace 10";
+
+          "${modifier}+Equal" = "scratchpad show";
+          "${modifier}+Shift+Equal" = "move scratchpad";
+
           "${modifier}+Shift+c" = "reload";
           "${modifier}+Shift+r" = "restart";
         };
