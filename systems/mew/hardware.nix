@@ -14,9 +14,10 @@
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
 
-  boot.kernelPackages = pkgs.linuxPackages_testing;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
+  /*
   boot.kernelParams = [ "kmemleak=on" ];
 
   boot.kernelPatches = [ {
@@ -25,7 +26,8 @@
     extraConfig = ''
       DEBUG_KMEMLEAK y
     '';
-  } ];
+    } ];
+    */
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/8e220c5a-93f7-415b-a3fa-ce1f823dd145";
