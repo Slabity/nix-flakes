@@ -17,34 +17,16 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
-  /*
-  boot.kernelParams = [ "kmemleak=on" ];
-
-  boot.kernelPatches = [ {
-    name = "enable-kmemleak";
-    patch = null;
-    extraConfig = ''
-      DEBUG_KMEMLEAK y
-    '';
-    } ];
-    */
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/8e220c5a-93f7-415b-a3fa-ce1f823dd145";
-    fsType = "btrfs";
-    options = [ "noatime,compress=zstd:1,ssd,space_cache=v2,subvol=system" ];
+    device = "UUID=24cfa71c-57a3-4498-b2a2-2deb0a215345";
+    fsType = "bcachefs";
+    options = [ "noatime" ];
   };
 
-  fileSystems."/home" = {
-    device = "/dev/disk/by-uuid/8e220c5a-93f7-415b-a3fa-ce1f823dd145";
-    fsType = "btrfs";
-    options = [ "noatime,compress=zstd:1,ssd,space_cache=v2,subvol=data" ];
-  };
-
-  fileSystems."/home/steam" = {
-    device = "/dev/disk/by-uuid/6d9f38d0-68a9-41b6-a66b-2859156ef46b";
-    fsType = "btrfs";
-    options = [ "noatime,ssd,space_cache=v2,subvol=steam" ];
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/6D15-C36B";
+    fsType = "vfat";
   };
 
   # Disable the odd Vulkan Loader stuff with this

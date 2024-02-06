@@ -91,5 +91,7 @@ with lib;
       XDG_STATE_HOME  = "\${HOME}/.local/state";
       PATH = [ "\${XDG_BIN_HOME}" ];
     };
+
+    services.fwupd.enable = true;
   };
 }
