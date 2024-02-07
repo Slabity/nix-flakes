@@ -13,11 +13,15 @@ with lib;
 
       man-pages
 
-      pciutils usbutils
+      pciutils usbutils lsof
       pstree
       file bc psmisc
 
       unzip zip unrar
+
+      efibootmgr
+      smartmontools
+      bind
     ];
 
     programs.zsh.enable = true;
@@ -36,6 +40,8 @@ with lib;
     programs.neovim = {
       enable = true;
     };
+
+    services.fwupd.enable = true;
 
     nix = {
       package = pkgs.nixUnstable;
@@ -83,7 +89,7 @@ with lib;
       ln -sv ${../../overlays/personal} $out/overlays/personal
     '';
 
-    environment.sessionVariables = rec {
+    environment.sessionVariables = {
       XDG_CACHE_HOME  = "\${HOME}/.cache";
       XDG_CONFIG_HOME = "\${HOME}/.config";
       XDG_BIN_HOME    = "\${HOME}/.local/bin";
@@ -91,7 +97,5 @@ with lib;
       XDG_STATE_HOME  = "\${HOME}/.local/state";
       PATH = [ "\${XDG_BIN_HOME}" ];
     };
-
-    services.fwupd.enable = true;
   };
 }
