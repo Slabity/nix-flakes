@@ -41,11 +41,6 @@ with lib;
       socketActivation = true;
     };
 
-    programs.hyprland = {
-      enable = true;
-      package = flake.hyprland.packages.${pkgs.system}.hyprland;
-    };
-
     programs.sway = {
       enable = true;
       wrapperFeatures.gtk = true;

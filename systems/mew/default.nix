@@ -46,4 +46,8 @@ with lib;
   services.openssh.enable = true;
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
+  programs.virt-manager.enable = true;
+  virtualisation.libvirtd.enable = true;
+  virtualisation.libvirtd.qemu.swtpm.enable = true;
 }
