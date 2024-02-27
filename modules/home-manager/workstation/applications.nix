@@ -54,7 +54,7 @@ with lib;
       feh
       krita
       gimp
-      blender-hip
+      #blender-hip
 
       discord-canary
       element-desktop

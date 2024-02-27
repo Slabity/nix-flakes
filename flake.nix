@@ -6,6 +6,8 @@
     secrets.url = "flake:secrets";
 
     nixpkgs.url = "flake:nixpkgs";
+    nixpkgs-master.url = "github:NixOS/nixpkgs/master";
+    nixpkgs-staging-next.url = "github:NixOS/nixpkgs/staging-next";
     nixos-hardware.url = "flake:nixos-hardware";
     home-manager = {
       url = "flake:home-manager";

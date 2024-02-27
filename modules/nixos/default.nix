@@ -79,7 +79,13 @@ with lib;
       overlays = [
         flake.overlays.personal
       ];
-      config.allowUnfree = true;
+      config = {
+        allowUnfree = true;
+
+        packageOverrides = pkgs: {
+          alsa-ucm-conf = flake.inputs.nixpkgs-staging-next.legacyPackages.${pkgs.system}.alsa-ucm-conf;
+        };
+      };
     };
 
     system.extraSystemBuilderCmds = ''
