@@ -81,10 +81,6 @@ with lib;
       ];
       config = {
         allowUnfree = true;
-
-        packageOverrides = pkgs: {
-          alsa-ucm-conf = flake.inputs.nixpkgs-staging-next.legacyPackages.${pkgs.system}.alsa-ucm-conf;
-        };
       };
     };
 

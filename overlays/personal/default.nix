@@ -1,12 +1,5 @@
 final: prev:
 {
-  steam = (prev.steam.override {
-    extraPkgs = pkgs: with pkgs; [
-      gamemode.lib
-      gamemode
-    ];
-  });
-
   opentabletdriver = prev.opentabletdriver.overrideAttrs(old: {
     version = "0.6.0.6";
 

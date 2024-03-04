@@ -49,12 +49,9 @@ with lib;
     };
 
     home.packages = with pkgs; [
-      super-slicer-latest
-
       feh
       krita
       gimp
-      #blender-hip
 
       discord-canary
       element-desktop
