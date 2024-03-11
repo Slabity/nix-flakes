@@ -71,7 +71,7 @@ with lib;
       waybar # status bar
       mako # notification daemon
       kanshi # autorandr
-      wdisplays
+      nwg-displays
       waypipe
 
       # Screenshots
