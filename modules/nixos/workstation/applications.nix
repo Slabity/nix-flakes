@@ -10,5 +10,14 @@ with lib;
     boot.extraModulePackages = with config.boot.kernelPackages; [
       v4l2loopback
     ];
+
+    programs.firefox = {
+      enable = true;
+      package = pkgs.firefox;
+      nativeMessagingHosts.packages = with pkgs; [
+        ff2mpv
+        browserpass
+      ];
+    };
   };
 }
