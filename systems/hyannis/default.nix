@@ -41,4 +41,13 @@ with lib;
 
   networking.hostName = "tslabinski-nixos";
   workstation.enable = true;
+
+  services.globalprotect = {
+    enable = true;
+    csdWrapper = "${pkgs.openconnect}/libexec/openconnect/hipreport.sh";
+  };
+
+  environment.systemPackages = with pkgs; [
+    globalprotect-openconnect
+  ];
 }
