@@ -12,25 +12,6 @@
       withPython3 = true;
       withRuby = true;
 
-      /*
-      extraPackages = [
-        #rustChannel.rust
-        #rustChannel.rust-src
-        pkgs.rustPackages.rustc
-        pkgs.rustPackages.cargo
-        pkgs.rustPackages.rustfmt
-        pkgs.rustPackages.rustPlatform.rustLibSrc
-        ];
-        */
-
-        /*
-      extraPython3Packages = ps: with ps; [
-        #pyls-mypy
-        #pyls-isort
-        #pyls-black
-        ];
-        */
-
       extraConfig = ''
           filetype plugin on
           syntax enable
@@ -89,6 +70,21 @@
       '';
 
       plugins = with pkgs.vimPlugins; [
+        {
+          plugin = nvim-treesitter.withAllGrammars;
+          config = ''
+            lua << EOF
+              require'nvim-treesitter.configs'.setup {
+                sync_install = false,
+                auto_install = false,
+
+                highlight = {
+                  enable = true,
+                },
+              }
+            EOF
+          '';
+        }
         # LSP configs
         {
           plugin = nvim-lspconfig;

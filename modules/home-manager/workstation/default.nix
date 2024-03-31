@@ -422,8 +422,8 @@ in
         position = "1440,1120";
       };
       secondary = {
-        criteria = "HYC CO., LTD.  Unknown";
-        mode = "2560x1440@59.95Hz";
+        criteria = "HYC CO., LTD. DUAL-DVI Unknown";
+        mode = "2560x1440@59.951Hz";
         position = "0,0";
         transform = "90";
       };
