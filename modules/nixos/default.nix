@@ -44,7 +44,6 @@ with lib;
     services.fwupd.enable = true;
 
     nix = {
-      package = pkgs.nixUnstable;
       gc.automatic = true;
       optimise.automatic = true;
 

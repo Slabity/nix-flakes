@@ -22,6 +22,7 @@ with lib;
       "video"  # Permissions for GPU modesetting
       "render" # Permissions for GPU rendering
       "input"  # Permissions for input devices
+      "dialout"
     ];
   };
 
@@ -48,4 +49,6 @@ with lib;
   programs.virt-manager.enable = true;
   virtualisation.libvirtd.enable = true;
   virtualisation.libvirtd.qemu.swtpm.enable = true;
+
+  services.udev.packages = [ pkgs.picoprobe-udev-rules ];
 }

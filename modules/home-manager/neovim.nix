@@ -62,11 +62,6 @@
           set pastetoggle=<F12>
           set foldmethod=syntax
           set mouse=v
-
-          " let $LOG_LEVEL='TRACE'
-          " let $RUST_LOG='rls=TRACE'
-          " let $RUST_SRC_PATH='rustChannel.rust-src/lib/rustlib/src/rust/library'
-          " let $RUST_SRC_PATH='${pkgs.rustPackages.rustPlatform.rustLibSrc}'
       '';
 
       plugins = with pkgs.vimPlugins; [
@@ -299,7 +294,7 @@
 
         # Language support
         csv
-        rust-vim
+        #rust-vim
         vim-nix
         vim-go
         vim-glsl

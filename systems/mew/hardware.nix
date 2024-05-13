@@ -34,7 +34,7 @@
     DISABLE_LAYER_AMD_SWITCHABLE_GRAPHICS_1 = "1";
   };
 
-  powerManagement.cpuFreqGovernor = lib.mkDefault "performance";
+  powerManagement.cpuFreqGovernor = "performance";
 
   nixpkgs.config.rocmSupport = true;
 }
