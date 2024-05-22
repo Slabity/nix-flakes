@@ -35,7 +35,12 @@ with lib;
       lfs.enable = true;
     };
 
-    programs.atop.enable = true;
+    programs.htop = {
+      enable = true;
+      settings = {
+        hide_kernel_threads = false;
+      };
+    };
 
     programs.neovim = {
       enable = true;
