@@ -1,7 +1,6 @@
 { config, lib, pkgs, flake, ... }:
 {
   imports = [
-    flake.nixos-hardware.nixosModules.framework
     flake.nixos-hardware.nixosModules.framework-12th-gen-intel
   ];
 
@@ -17,19 +16,19 @@
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/3160f4d1-4516-4743-a7e7-ee13684a0fca";
     fsType = "btrfs";
-    options = [ "noatime,compress=zstd:1,ssd,space_cache=v2,subvol=system" ];
+    options = [ "noatime,ssd,space_cache=v2,subvol=system" ];
   };
 
   fileSystems."/nix" = {
     device = "/dev/disk/by-uuid/3160f4d1-4516-4743-a7e7-ee13684a0fca";
     fsType = "btrfs";
-    options = [ "noatime,compress=zstd:1,ssd,space_cache=v2,subvol=nix" ];
+    options = [ "noatime,ssd,space_cache=v2,subvol=nix" ];
   };
 
   fileSystems."/home" = {
     device = "/dev/disk/by-uuid/3160f4d1-4516-4743-a7e7-ee13684a0fca";
     fsType = "btrfs";
-    options = [ "noatime,compress=zstd:1,ssd,space_cache=v2,subvol=data" ];
+    options = [ "noatime,ssd,space_cache=v2,subvol=data" ];
   };
 
   fileSystems."/boot" = {

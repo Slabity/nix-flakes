@@ -16,7 +16,7 @@ with lib;
 
   users.users.slabity = {
     isNormalUser = true;
-    extraGroups = [ "wheel" ];
+    extraGroups = [ "wheel" "dialout" ];
   };
 
   home-manager = {
