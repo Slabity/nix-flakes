@@ -2,6 +2,7 @@
 with lib;
 {
   imports = [
+    ./colors.nix
     ./neovim.nix
     ./zsh.nix
     ./workstation
