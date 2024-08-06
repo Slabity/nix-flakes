@@ -39,6 +39,10 @@ with lib;
 
   services.openssh.enable = true;
 
+  services.tailscale = {
+    enable = true;
+  };
+
   networking.hostName = "lucario";
   workstation.enable = true;
   workstation.gaming.enable = true;

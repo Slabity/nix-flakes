@@ -1,27 +1,8 @@
 { config, lib, pkgs, flake, ... }:
-with lib;
 let
-  colors = {
-    primary.background = "#151017";
-    primary.foreground = "#F5E1FF";
-    normal.black = "#3B2B42";
-    normal.red = "#CC396A";
-    normal.green = "#00919E";
-    normal.yellow = "#CC4759";
-    normal.blue = "#7B42CC";
-    normal.magenta = "#B72AD9";
-    normal.cyan = "#1C7ACC";
-    normal.white = "#9883A3";
-    bright.black = "#5A4b62";
-    bright.red = "#F288AB";
-    bright.green = "#6CBDC5";
-    bright.yellow = "#EB7181";
-    bright.blue = "#B295DB";
-    bright.magenta = "#D899E8";
-    bright.cyan = "#9AC1E4";
-    bright.white = "#EAD8FF";
-  };
+  colors = config.colors;
 in
+with lib;
 {
   imports = [
     ./applications.nix
@@ -102,7 +83,7 @@ in
         };
         focus.newWindow = "urgent";
         keybindings = let modifier = "Mod4"; in {
-          "${modifier}+Return" = "exec ${pkgs.alacritty}/bin/alacritty";
+          "${modifier}+Return" = "exec ${pkgs.kitty}/bin/kitty";
           "${modifier}+d" = "exec --no-startup-id ${pkgs.wofi}/bin/wofi --show run";
 
           "${modifier}+Shift+q" = "kill";
@@ -452,17 +433,37 @@ in
       };
     };
 
-    programs.alacritty = {
+    programs.kitty = {
       enable = true;
+      font = {
+        package = pkgs.nerdfonts;
+        name = "Terminess Nerd Font Mono";
+        size = 9;
+      };
       settings = {
-        font.normal.family = "monospace";
-        font.size = 9;
-        colors = colors;
-        bell = {
-          animation = "EaseOutCirc";
-          duration = 100;
-          color = "0x221414";
-        };
+        foreground = colors.primary.foreground;
+        background = colors.primary.background;
+
+        color0 = colors.normal.black;
+        color1 = colors.normal.red;
+        color2 = colors.normal.green;
+        color3 = colors.normal.yellow;
+        color4 = colors.normal.blue;
+        color5 = colors.normal.magenta;
+        color6 = colors.normal.cyan;
+        color7 = colors.normal.white;
+        color8 = colors.bright.black;
+        color9 = colors.bright.red;
+        color10 = colors.bright.green;
+        color11 = colors.bright.yellow;
+        color12 = colors.bright.blue;
+        color13 = colors.bright.magenta;
+        color14 = colors.bright.cyan;
+        color15 = colors.bright.white;
+
+        enable_audio_bell = false;
+        visual_bell_duration = "0.1";
+        visual_bell_color = "#221414";
       };
     };
 
@@ -507,40 +508,9 @@ in
       width = 500;
     };
 
-    xresources.extraConfig = ''
-      *saveLines: 8192
-      *font: Terminus 8
-      *letterSpace: 0
-      *lineSpace: 0
-
-      ! special
-      *.foreground: ${colors.primary.foreground}
-      *.background: ${colors.primary.background}
-
-      *.color0: ${colors.normal.black}
-      *.color1: ${colors.normal.red}
-      *.color2: ${colors.normal.green}
-      *.color3: ${colors.normal.yellow}
-      *.color4: ${colors.normal.blue}
-      *.color5: ${colors.normal.magenta}
-      *.color6: ${colors.normal.cyan}
-      *.color7: ${colors.normal.white}
-      *.color8: ${colors.bright.black}
-      *.color9: ${colors.bright.red}
-      *.color10: ${colors.bright.green}
-      *.color11: ${colors.bright.yellow}
-      *.color12: ${colors.bright.blue}
-      *.color13: ${colors.bright.magenta}
-      *.color14: ${colors.bright.cyan}
-      *.color15: ${colors.bright.white}
-
-      ! rofi config
-      rofi.color-enabled: true
-      rofi.color-normal:  ${colors.primary.background},${colors.primary.foreground},${colors.normal.red},${colors.normal.yellow},${colors.primary.foreground}
-      rofi.color-window:  ${colors.primary.background},${colors.bright.red}
-
-      Xft.dpi: 96
-    '';
+    xresources.properties = {
+      "Xft.dpi" = 96;
+    };
 
     services.easyeffects = {
       enable = true;

@@ -12,13 +12,13 @@ with lib;
       fontconfig = {
         enable = true;
         defaultFonts.monospace = [
-          "Terminess Powerline"
-          "TerminessTTF Nerd Font Mono"
-          #"Terminess Nerd Font"
+          #"Terminess Powerline"
+          #"TerminessTTF Nerd Font Mono"
+          "Terminess Nerd Font"
         ];
         defaultFonts.emoji = [ "Noto Color Emoji" ];
-        hinting.enable = true;
-        antialias = true;
+        #hinting.enable = true;
+        #antialias = true;
       };
     };
   };
