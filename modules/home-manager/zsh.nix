@@ -41,54 +41,37 @@
       enableZshIntegration = true;
       settings = {
         format = lib.concatStrings [
-          "[](fg:white)"
-          "[$time](inverted)"
-          "[](fg:prev_bg bg:red)"
+          "$status"
+          "$time"
+          "$direnv"
           "$directory"
-          "[](fg:#3B76F0 bg:#FCF392)"
-          "$git_branch"
-          "$git_status"
-          "$git_metric"
-          "[](fg:#FCF392 bg:#030B16)"
+          "$git"
           "$character"
         ];
 
+        status = {
+          disabled = false;
+          recognize_signal_code = true;
+          format = "[Error code: $status]($style)\n";
+          style = "fg:red bg:none";
+        };
+
         time = {
           disabled = false;
-          time_format = "%R";
-          format = "[$time]($style)";
+          format = "[](fg:red)[󰥔 $time ]($style)";
+          time_format = "%T";
+          style = "fg:text bg:red";
         };
 
         directory = {
-          format = "[ ﱮ $path ]($style)";
-        };
-
-        git_branch = {
-          format = "[ $symbol$branch(:$remote_branch) ]($style)";
-          symbol = "  ";
-        };
-
-        git_status = {
-          format = "[$all_status]($style)";
-        };
-
-        git_metrics = {
-          format = "([+$added]($added_style))[]($added_style)";
-          added_style = "fg:#1C3A5E bg:#FCF392";
-          deleted_style = "fg:bright-red bg:235";
-          disabled = false;
-        };
-
-        cmd_duration = {
-          format = "[  $duration ]($style)";
-          style = "fg:bright-white bg:18";
+          format = "[](fg:prev_bg bg:surface0)[ $read_only$path ]($style)";
+          read_only = " ";
+          style = "fg:text bg:surface0";
         };
 
         character = {
-          success_symbol = "[ \\$](bold green) ";
-          error_symbol = "[ ✗](#E84D44) ";
+          format = "[](fg:prev_bg bg:none) [\\$ ](fg:text)";
         };
-
       };
     };
 

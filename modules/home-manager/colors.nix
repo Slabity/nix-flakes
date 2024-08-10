@@ -1,6 +1,10 @@
 { config, lib, pkgs, flake, ... }:
 with lib;
 {
+  imports = [
+    flake.catppuccin.homeManagerModules.catppuccin
+  ];
+
   options = {
     colors = mkOption {
       description = "Color scheme definition";
@@ -24,6 +28,14 @@ with lib;
         bright.cyan = "#9AC1E4";
         bright.white = "#EAD8FF";
       };
+    };
+  };
+
+  config = {
+    catppuccin = {
+      enable = true;
+      flavor = "mocha";
+      accent = "red";
     };
   };
 }

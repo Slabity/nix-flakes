@@ -29,6 +29,7 @@ with lib;
         window = {
           titlebar = false;
         };
+        /*
         colors = {
           focused = {
             border = colors.normal.blue;
@@ -66,6 +67,7 @@ with lib;
             childBorder = colors.normal.black;
           };
         };
+        */
         output = {
           "\*" = {
             background = "${colors.primary.background} solid_color";
@@ -441,6 +443,7 @@ with lib;
         size = 9;
       };
       settings = {
+        /*
         foreground = colors.primary.foreground;
         background = colors.primary.background;
 
@@ -460,6 +463,7 @@ with lib;
         color13 = colors.bright.magenta;
         color14 = colors.bright.cyan;
         color15 = colors.bright.white;
+        */
 
         enable_audio_bell = false;
         visual_bell_duration = "0.1";
@@ -502,8 +506,8 @@ with lib;
       enable = true;
       anchor = "top-right";
       font = "Terminus 12";
-      backgroundColor = colors.primary.background;
-      borderColor = colors.normal.blue;
+      #backgroundColor = colors.primary.background;
+      #borderColor = colors.normal.blue;
       borderSize = 2;
       width = 500;
     };

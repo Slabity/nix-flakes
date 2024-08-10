@@ -17,7 +17,7 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
-  boot.kernelParams = [ ];
+  boot.kernelParams = [ "iomem=relaxed" ];
 
   fileSystems."/" = {
     device = "UUID=24cfa71c-57a3-4498-b2a2-2deb0a215345";

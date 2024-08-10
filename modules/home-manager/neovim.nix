@@ -16,8 +16,8 @@
           filetype plugin on
           syntax enable
           set background=dark
-          set notermguicolors
-          colorscheme vim
+          " set notermguicolors
+          " colorscheme vim
 
           set laststatus=2
           set shortmess=aoOW

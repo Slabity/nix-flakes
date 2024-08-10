@@ -93,6 +93,8 @@ with lib;
       ln -sv ${../../overlays/personal} $out/overlays/personal
     '';
 
+    programs.nix-ld.enable = true;
+
     environment.sessionVariables = {
       XDG_CACHE_HOME  = "\${HOME}/.cache";
       XDG_CONFIG_HOME = "\${HOME}/.config";
