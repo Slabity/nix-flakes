@@ -38,6 +38,13 @@ with lib;
 
   services.tailscale = {
     enable = true;
+    useRoutingFeatures = "server";
+    interfaceName = "wg0";
+    extraSetFlags = [
+      "--advertise-exit-node"
+      "--advertise-routes=192.168.200.0/24"
+      "--snat-subnet-routes=false"
+    ];
   };
 
   networking = {
@@ -67,13 +74,6 @@ with lib;
               "wg0",
             } counter accept
 
-            # Allow certain ports access to the router
-            iifname "wan0" tcp dport { 22422 } counter accept
-            iifname "wan0" udp dport { 22422 } counter accept
-            iifname "wan0" udp dport {
-              ${builtins.toString flake.secrets.wireguard.lapras.port}
-            } counter accept
-
             # Allow returning traffic from wan0 and drop everthing else
             iifname "wan0" ct state { established, related } counter accept
             iifname "wan0" drop
@@ -93,20 +93,23 @@ with lib;
 
             # Allow trusted network WAN access
             iifname {
-                    "br-lan0",
-                    "wg0",
-                    "lo",
+              "br-lan0",
+              "wg0",
+              "lo",
             } oifname {
-                    "wan0",
+              "wan0",
+              "br-lan0",
+              "wg0",
+              "lo",
             } counter accept comment "Allow trusted LAN to WAN"
 
             # Allow established WAN to return
             iifname {
-                    "wan0",
+              "wan0",
             } oifname {
-                    "br-lan0",
-                    "wg0",
-                    "lo",
+              "br-lan0",
+              "wg0",
+              "lo",
             } ct state established,related counter accept comment "Allow established back to LANs"
           }
         }
@@ -114,17 +117,14 @@ with lib;
         table ip nat {
           chain prerouting {
             type nat hook output priority filter; policy accept;
-
-            # Port forwarding rules
-            tcp dport 22422 dnat 192.168.200.185:22
-            udp dport 22422 dnat 192.168.200.185:22
           }
 
-          # Setup NAT masquerading on the wan0 interface
+          # Setup NAT masquerading on the wan0 and wg0 interfaces
           chain postrouting {
             type nat hook postrouting priority filter; policy accept;
             oifname {
-              "wan0"
+              "wan0",
+              "wg0"
             } masquerade
           }
         }
@@ -152,14 +152,6 @@ with lib;
         linkConfig.Name = "lan2";
         matchConfig.MACAddress = "00:e2:69:5c:75:bc";
       };
-      "40-wifi0" = {
-        linkConfig.Name = "wifi0";
-        matchConfig.MACAddress = "00:0a:52:07:f5:9e";
-      };
-      "40-wifi1" = {
-        linkConfig.Name = "wifi1";
-        matchConfig.MACAddress = "00:0a:52:07:f5:9f";
-      };
     };
 
     netdevs = {
@@ -168,33 +160,6 @@ with lib;
           Name = "br-lan0";
           Kind = "bridge";
         };
-      };
-
-      wg0 = {
-        netdevConfig = {
-          Name = "wg0";
-          Kind = "wireguard";
-        };
-
-        wireguardConfig = {
-          PrivateKeyFile = flake.secrets.wireguard.lapras.privateKey;
-          ListenPort = flake.secrets.wireguard.lapras.port;
-        };
-
-        wireguardPeers = [
-          {
-            wireguardPeerConfig = {
-              PublicKey = flake.secrets.wireguard.mew.publicKey;
-              AllowedIPs = "10.100.0.0/24";
-            };
-          }
-          {
-            wireguardPeerConfig = {
-              PublicKey = flake.secrets.wireguard.pichu.publicKey;
-              AllowedIPs = "10.100.0.0/24";
-            };
-          }
-        ];
       };
     };
 
@@ -229,20 +194,6 @@ with lib;
         linkConfig.RequiredForOnline = false;
       };
 
-      wifi0 = {
-        name = "wifi0";
-        DHCP = "no";
-        #bridge = [ "br-lan0" ];
-        linkConfig.RequiredForOnline = false;
-      };
-
-      wifi1 = {
-        name = "wifi1";
-        DHCP = "no";
-        #bridge = [ "br-lan0" ];
-        linkConfig.RequiredForOnline = false;
-      };
-
       br-lan0 = {
         name = "br-lan0";
         DHCP = "yes";
@@ -250,13 +201,6 @@ with lib;
         networkConfig = {
           ConfigureWithoutCarrier = true;
         };
-        linkConfig.RequiredForOnline = false;
-      };
-
-      wg0 = {
-        name = "wg0";
-        DHCP = "no";
-        address = [ "10.100.0.1/24" ];
         linkConfig.RequiredForOnline = false;
       };
     };
@@ -268,12 +212,6 @@ with lib;
 
     # If you want to use it for ipv6
     "net.ipv6.conf.all.forwarding" = true;
-
-    # source: https://github.com/mdlayher/homelab/blob/master/nixos/routnerr-2/configuration.nix#L52
-    # By default, not automatically configure any IPv6 addresses.
-    "net.ipv6.conf.all.accept_ra" = 0;
-    "net.ipv6.conf.all.autoconf" = 0;
-    "net.ipv6.conf.all.use_tempaddr" = 0;
 
     # On WAN, allow IPv6 autoconfiguration and tempory address use.
     "net.ipv6.conf.wan0.accept_ra" = 2;
