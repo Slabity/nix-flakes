@@ -6,6 +6,7 @@ with lib;
     ./applications.nix
     ./networking.nix
     ./fonts.nix
+    ./stylix.nix
   ];
 
   options.workstation = {
