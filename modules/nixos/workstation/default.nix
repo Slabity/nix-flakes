@@ -6,7 +6,7 @@ with lib;
     ./applications.nix
     ./networking.nix
     ./fonts.nix
-    ./stylix.nix
+    ./stylix
   ];
 
   options.workstation = {
@@ -82,7 +82,7 @@ with lib;
 
       # GTK settings
       glib # for gsettings
-      gnome.adwaita-icon-theme
+      pkgs.adwaita-icon-theme
       gtk-engine-murrine
       gtk_engines
       gsettings-desktop-schemas
