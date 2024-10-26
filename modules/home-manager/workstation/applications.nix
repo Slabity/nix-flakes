@@ -31,7 +31,6 @@ with lib;
       enable = true;
       plugins = with pkgs.obs-studio-plugins; [
         wlrobs
-        obs-multi-rtmp
         obs-gstreamer
       ];
     };
@@ -50,9 +49,7 @@ with lib;
       gimp
 
       discord-canary
-      element-desktop
 
-      transmission
       arduino
       audacity
 

@@ -351,6 +351,7 @@ with lib;
       settings = {
         width = 400;
       };
+      /*
       style = ''
         * {
           font-family: monospace;
@@ -395,7 +396,8 @@ with lib;
         #entry:selected {
           background-color: ${colors.primary.background};
         }
-      '';
+        '';
+        */
     };
 
     services.kanshi = let
@@ -437,11 +439,11 @@ with lib;
 
     programs.kitty = {
       enable = true;
-      font = {
+      /*font = {
         package = pkgs.nerdfonts;
         name = "Terminess Nerd Font Mono";
         size = 9;
-      };
+      };*/
       settings = {
         /*
         foreground = colors.primary.foreground;
@@ -487,6 +489,8 @@ with lib;
       };
     };
 
+    gtk.enable = true;
+    /*
     gtk = {
       enable = true;
       font = {
@@ -501,11 +505,12 @@ with lib;
         name = "Arc-Dark";
       };
     };
+    */
 
     services.mako = {
       enable = true;
       anchor = "top-right";
-      font = "Terminus 12";
+      #font = "Terminus 12";
       #backgroundColor = colors.primary.background;
       #borderColor = colors.normal.blue;
       borderSize = 2;

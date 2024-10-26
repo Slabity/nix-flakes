@@ -1,9 +1,11 @@
 { config, lib, pkgs, flake, ... }:
 with lib;
 {
+  /*
   imports = [
     flake.catppuccin.homeManagerModules.catppuccin
   ];
+  */
 
   options = {
     colors = mkOption {
@@ -31,6 +33,7 @@ with lib;
     };
   };
 
+  /*
   config = {
     catppuccin = {
       enable = true;
@@ -38,4 +41,5 @@ with lib;
       accent = "red";
     };
   };
+  */
 }
