@@ -25,6 +25,7 @@ with lib;
 
       config = {
         modifier = "Mod4";
+        terminal = "kitty";
         bars = [];
         window = {
           titlebar = false;

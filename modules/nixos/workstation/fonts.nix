@@ -7,7 +7,7 @@ with lib;
       packages = with pkgs; [
         corefonts source-code-pro source-sans-pro source-serif-pro
         font-awesome terminus_font powerline-fonts google-fonts inconsolata noto-fonts
-        noto-fonts-cjk unifont ubuntu_font_family nerdfonts
+        noto-fonts-cjk-sans unifont ubuntu_font_family nerdfonts
       ];
       fontconfig = {
         enable = true;
